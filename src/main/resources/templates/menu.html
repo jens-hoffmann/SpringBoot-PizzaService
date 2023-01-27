@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/thymeleaf.html to edit this template
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+
+    <body>
+        <p data-th-text="#{welcome}">Welcome!</p>
+        <table>
+            <thead>
+               <tr>
+                 <th th:text="#{msgs.headers.name}">Name</th>
+                 <th th:text="#{msgs.headers.price}">Price</th>
+               </tr>
+             </thead>
+             <tbody>
+               <tr th:each="menu: ${menuList}">
+                 <td th:text="${menu.name}">Oranges</td>
+                 <td th:text="${#numbers.formatDecimal(menu.price, 1, 2)}">0.99</td>
+               </tr>
+             </tbody>            
+        </table>
+    </body>
+
+</html>

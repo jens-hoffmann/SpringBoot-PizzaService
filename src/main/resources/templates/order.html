@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+            <title>Title</title>
+    </head>
+    <body>
+        <h1>Put your orders</h1>
+        <div class="grid">
+            <table>
+                <thead>
+                    <tr>
+                        <th th:text="#{msgs.headers.name}">Name</th>
+                        <th th:text="#{msgs.headers.price}">Price</th>
+                        <th th:text="#{msgs.headers.amount}">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="menu: ${menuList}">
+                        <td th:text="${menu.name}">Oranges</td>
+                        <td th:text="${#numbers.formatDecimal(menu.price, 1, 2)}">0.99</td>
+                        <td>
+                            <div>
+                                <form  method="POST" th:action="@{/order/{id}(id=${orderObject.sessionId})}" th:object="${orderItem}">
+                                    <input  type="hidden" name="dish" th:value="${menu.name}"/>
+
+                                    <input  name="amount" type="number" value="0" min="1" max="99" />
+                                    <input  type="submit" value="Add"/>
+                                </form>
+                            </div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+            <button> Submit your order</button>
+        </div>
+        </div>
+        </form>
+        <hr />
+        <p>Selected</p>
+        <table>
+            <thead>
+                <tr>
+                    <th >Dish name</th>
+                </tr>
+            </thead>
+            <tfoot />
+            <tbody>
+                <tr th:each="orderItem : ${@shoppingCart.content}">
+                    <td th:text="${orderItem.dish}">
+                        Margarita
+                    </td>
+                    <td th:text="${orderItem.amount}">
+                        Amount
+                    </td>
+                    <td>
+                        <form th:method="DELETE" th:action="@{/order/{dish}(dish=${orderItem.dish})}" >
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <form  method="POST" th:action="@{/checkout}" >
+            <input  type="submit" value="Checkout Shopping cart"/>
+        </form>        
+    </body>
+</html>
