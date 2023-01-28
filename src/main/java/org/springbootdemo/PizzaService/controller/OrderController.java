@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import javax.validation.Valid;
 import org.springbootdemo.PizzaService.domain.DishOrder;
 import org.springbootdemo.PizzaService.domain.OrderItem;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 
 @Slf4j
 @Controller
@@ -53,14 +55,14 @@ public class OrderController {
     
     @GetMapping ("/order")
     public String getOrderView() {
-        log.info("Create order view");
+        log.info("GET Create order view");
         return "order";
     }
     
 
     @GetMapping ("/checkout")
     public String getCheckoutView(@ModelAttribute DishOrder order) {
-        log.info("Create checkout view");
+        log.info("GET Create checkout view");
         
         ShoppingCart cart = this.shoppingCart.getObject();
         
@@ -74,9 +76,14 @@ public class OrderController {
     
 
     @PostMapping("/order/{id}")
-    public String putOrder(@PathVariable String id, @ModelAttribute OrderItem orderItem ) {
+    public String putOrder(@PathVariable String id, @ModelAttribute @Valid OrderItem orderItem , Errors errors) {
         
-        log.info("putOrder: " + id + " on " + orderItem);
+        log.info("POST putOrder: " + id + " on " + orderItem);
+        
+        if (errors.hasErrors()) {
+            
+            return "order";
+        }
         this.shoppingCart.getObject()
                 .add(orderItem);
         
@@ -84,9 +91,14 @@ public class OrderController {
     }
 
     @PostMapping("/checkout")
-    public String checkoutOrder() {
+    public String checkoutOrder(@ModelAttribute @Valid DishOrder orderObject , Errors errors) {
                 
-        log.info("checkoutOrder");
+        log.info("POST checkoutOrder " + orderObject);
+        
+        if (errors.hasErrors()) {
+            
+            return "checkout";
+        }        
         ShoppingCart cart = this.shoppingCart.getObject();
         if (cart.getContent().isEmpty()) {
             log.warn("Try to checkout empty shopping cart");
@@ -98,9 +110,8 @@ public class OrderController {
     }
     
     @RequestMapping(value="/order/{name}", method = RequestMethod.DELETE)
-    public String removeFromCart(
-            @PathVariable String name
-    ) {
+    public String removeFromCart(@PathVariable String name) {
+        log.info("DELETE removeFromCart");
         this.shoppingCart.getObject()
                 .removeByName(name);
         return "redirect:/order";

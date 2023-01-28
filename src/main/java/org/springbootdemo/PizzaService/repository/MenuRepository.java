@@ -7,6 +7,8 @@ package org.springbootdemo.PizzaService.repository;
 import org.springbootdemo.PizzaService.domain.Menu;
 import org.springbootdemo.PizzaService.domain.Dish;
 import java.util.List;
+import java.util.Optional;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -34,5 +36,13 @@ public class MenuRepository {
         return this.menu.getDishList();
     }
     
+    public float getPriceForDishName(String dishName) {
+        Optional<Dish> dish1 = menu.getDishList().stream().filter(dish -> (dish.getName().equalsIgnoreCase(dishName))).findFirst();
+        if (dish1.isPresent()) {
+            return dish1.get().getPrice();
+        } else {
+            return 0.0F;
+        }
+    }
     
 }

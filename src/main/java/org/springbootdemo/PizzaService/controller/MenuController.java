@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.springbootdemo.PizzaService.controller;
 
 import org.springbootdemo.PizzaService.repository.MenuRepository;
@@ -32,6 +28,7 @@ public class MenuController {
     public List<Dish> getMenu() {
         return menuRepository.getMenu();
     }
+
 
     @GetMapping
     public String getMenuCard() {

@@ -23,9 +23,10 @@
                         <td>
                             <div>
                                 <form  method="POST" th:action="@{/order/{id}(id=${orderObject.sessionId})}" th:object="${orderItem}">
-                                    <input  type="hidden" name="dish" th:value="${menu.name}"/>
+                                    <input  type="hidden" name="dish" th:value="${menu.name}" />
 
-                                    <input  name="amount" type="number" value="0" min="1" max="99" />
+                                    <input  name="amount" type="number" value="0" min="1" max="99"/>
+
                                     <input  type="submit" value="Add"/>
                                 </form>
                             </div>
@@ -64,6 +65,9 @@
                 </tr>
             </tbody>
         </table>
+        <br/>
+        <label for="totalPrice">Total Price</label>
+        <span th:text="${@shoppingCart.totalPrice}">total price</span></li>
         <form  method="POST" th:action="@{/checkout}" >
             <input  type="submit" value="Checkout Shopping cart"/>
         </form>        
