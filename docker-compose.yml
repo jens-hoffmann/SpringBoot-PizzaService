@@ -1,0 +1,39 @@
+version: '3'
+services:
+    database:
+        image: mariadb:10.6
+        container_name: 'pizzaservice_dbhost'
+        restart: always
+        ports:
+            - '3306:3306'
+        environment:
+            MYSQL_DATABASE: 'db'
+            MYSQL_USER: 'user'
+            MYSQL_PASSWORD: 'secretsofuser'
+            MYSQL_ROOT_PASSWORD: 'secretsofroot'
+        volumes:
+            - ./db:/var/lib/mysql
+
+    phpmyadmin:
+        image: phpmyadmin:latest
+        depends_on:
+            - database
+        container_name: 'pizzaservice_phpmyadmin'
+        restart: always
+        ports:
+            - '8090:80'
+        environment:
+            PMA_HOST: 'pizzaservice_dbhost'
+            PMA_USER: 'user'
+            PMA_PASSWORD: 'secretsofuser'
+
+    application:
+        image: springbootdemo.pizzaservice
+        container_name: 'pizzaservice_app'
+        ports:
+            - '8080:8080'
+        restart: always
+#        environment:
+#            - SPRING_DATASOURCE_URL=jdbc:h2:tcp://pizzaservice_dbhost/./unicorns
+#            - SPRING_DATASOURCE_USERNAME=user
+#            - SPRING_DATASOURCE_PASSWORD=secretsofuser
