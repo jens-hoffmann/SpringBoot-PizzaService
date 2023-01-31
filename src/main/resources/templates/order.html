@@ -22,11 +22,13 @@
                         <td th:text="${#numbers.formatDecimal(menu.price, 1, 2)}">0.99</td>
                         <td>
                             <div>
-                                <form  method="POST" th:action="@{/order/{id}(id=${orderObject.sessionId})}" th:object="${orderItem}">
+                                <form  method="POST" th:action="@{/order-item}" th:object="${orderItem}">
                                     <input  type="hidden" name="dish" th:value="${menu.name}" />
 
-                                    <input  name="amount" type="number" value="0" min="1" max="99"/>
-
+                                    <input  name="amount" type="number" value="0" />
+                                    <span class="validationError"
+                                          th:if="${#fields.hasErrors('amount')}"
+                                          th:errors="*{amount}">Name Error</span>
                                     <input  type="submit" value="Add"/>
                                 </form>
                             </div>
@@ -68,7 +70,7 @@
         <br/>
         <label for="totalPrice">Total Price</label>
         <span th:text="${@shoppingCart.totalPrice}">total price</span></li>
-        <form  method="POST" th:action="@{/checkout}" >
+        <form  method="POST" th:action="@{/order}" >
             <input  type="submit" value="Checkout Shopping cart"/>
         </form>        
     </body>

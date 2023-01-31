@@ -34,6 +34,6 @@ services:
             - '8080:8080'
         restart: always
 #        environment:
-#            - SPRING_DATASOURCE_URL=jdbc:h2:tcp://pizzaservice_dbhost/./unicorns
+#            - SPRING_DATASOURCE_URL=jdbc:mysql://pizzaservice_dbhost:3306/pizzaservice
 #            - SPRING_DATASOURCE_USERNAME=user
 #            - SPRING_DATASOURCE_PASSWORD=secretsofuser

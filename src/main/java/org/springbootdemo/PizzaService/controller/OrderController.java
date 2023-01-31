@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springbootdemo.PizzaService.domain.DishOrder;
 import org.springbootdemo.PizzaService.domain.OrderItem;
@@ -58,27 +59,11 @@ public class OrderController {
         log.info("GET Create order view");
         return "order";
     }
-    
 
-    @GetMapping ("/checkout")
-    public String getCheckoutView(@ModelAttribute DishOrder order) {
-        log.info("GET Create checkout view");
+    @PostMapping("/order-item")
+    public String putOrder(@ModelAttribute @Valid OrderItem orderItem , Errors errors) {
         
-        ShoppingCart cart = this.shoppingCart.getObject();
-        
-        if (cart.getContent().isEmpty()) {
-            return "redirect:/order";            
-        } else {
-            order.setShoppingCart(cart);
-            return "checkout";            
-        }    
-    }
-    
-
-    @PostMapping("/order/{id}")
-    public String putOrder(@PathVariable String id, @ModelAttribute @Valid OrderItem orderItem , Errors errors) {
-        
-        log.info("POST putOrder: " + id + " on " + orderItem);
+        log.info("POST putOrder: on " + orderItem);
         
         if (errors.hasErrors()) {
             
@@ -90,31 +75,28 @@ public class OrderController {
         return "redirect:/order";
     }
 
-    @PostMapping("/checkout")
-    public String checkoutOrder(@ModelAttribute @Valid DishOrder orderObject , Errors errors) {
-                
-        log.info("POST checkoutOrder " + orderObject);
-        
-        if (errors.hasErrors()) {
-            
-            return "checkout";
-        }        
-        ShoppingCart cart = this.shoppingCart.getObject();
-        if (cart.getContent().isEmpty()) {
-            log.warn("Try to checkout empty shopping cart");
-            return "redirect:/order";       
-        } else {
-            return "checkout";
-        }
-        
-    }
-    
+
     @RequestMapping(value="/order/{name}", method = RequestMethod.DELETE)
     public String removeFromCart(@PathVariable String name) {
         log.info("DELETE removeFromCart");
         this.shoppingCart.getObject()
                 .removeByName(name);
         return "redirect:/order";
+    }
+
+    @PostMapping("/order")
+    public String processPizza(
+            @ModelAttribute DishOrder orderObject, Errors errors) {
+
+        if (errors.hasErrors()) {
+            return "order";
+        }
+
+        orderObject.setDishesOrder(this.shoppingCart.getObject().getContent());
+        orderObject.setTotalPrice(this.shoppingCart.getObject().getTotalPrice());
+        log.info("Processing pizza: {}", orderObject);
+
+        return "redirect:/checkout/current";
     }
     
 }

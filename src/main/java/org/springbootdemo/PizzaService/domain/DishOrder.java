@@ -1,23 +1,25 @@
 package org.springbootdemo.PizzaService.domain;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springbootdemo.PizzaService.controller.ShoppingCart;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 
 import java.util.Map;
 import java.util.UUID;
+import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.CreditCardNumber;
-import org.springbootdemo.PizzaService.controller.ShoppingCart;
+
 
 @Data
+@Slf4j
 public class DishOrder {
-    //private List<OrderItem> dishesOrder;
-    private ShoppingCart shoppingCart;
-    
-    private String totalPrice;
+    private List<OrderItem> dishesOrder;
+    private Float totalPrice;
     
     private String ipAdress;
     private String sessionId;
@@ -45,17 +47,9 @@ public class DishOrder {
     private String ccCVV;    
     
     public DishOrder() {
+        log.info(" Crate new DishOrder");
         this.sessionId = UUID.randomUUID().toString();
         //this.dishesOrder = new ArrayList<>();
     }
-    
-    public void getTotalPriceOfShoppingCart() {
-        
-        /*float price = 0.0F;
-        for ( OrderItem item : shoppingCart.getContent()) {
-            //item.getDish()
-            
-        }*/
-        
-    }
+
 }
