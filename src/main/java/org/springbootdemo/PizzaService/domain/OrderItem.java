@@ -8,12 +8,11 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- *
- * @author hoffi
- */
-@Data
+@Getter
+@Setter
 public class OrderItem {
     
     @NotNull
@@ -21,7 +20,9 @@ public class OrderItem {
     
     @NotNull
     @Min(value = 1, message = "No negative number of dishes allowed")
-    @Max(value = 99, message = "Numbe of dishes exceed max allowed 99" )
+    @Max(value = 99, message = "Number of dishes exceed max allowed 99" )
     private int amount;
-    
+
+    public OrderItem() {
+    }
 }

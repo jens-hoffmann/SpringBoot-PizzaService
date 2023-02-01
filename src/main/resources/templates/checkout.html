@@ -4,12 +4,15 @@
       xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Pizza Service Checkout</title>
-
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="style.css" th:href="@{/style.css}" rel="stylesheet" />
     </head>
 
     <body>
-        <!--<h1>Checkout your shopping cart</h1>
-        <div class="grid">      
+        <h1>Checkout your shopping cart</h1>
+        <div th:text = "${#lists.size(orderObject.dishesOrder)}"/>
+
+        <div class="grid">
             <table>
                 <thead>
                     <tr>
@@ -17,22 +20,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="orderItem : ${@orderObject.dishesOrder}">
+                    <tr th:each="orderItem : ${orderObject.dishesOrder}">
                         <td th:text="${orderItem.dish}">
-                            Margarita
+                            Pizza
                         </td>
                         <td th:text="${orderItem.amount}">
                             Amount
                         </td>
                     </tr>
                 </tbody>
-            </table>   
+            </table>
         </div>
         <br/>
-        <label for="totalPrice">Total Price</label>
-        <span th:text="${@orderObject.totalPrice}">total price</span>-->
-        <div th:text = "${orderObject}">
-        </div>
+      <label for="totalPrice">Total Price</label>
+        <span th:text="${orderObject.totalPrice}">total price</span>
+
         <form method="POST" th:action="@{/checkout}" th:object="${orderObject}">
 
             <!-- end::allButValidation[] -->

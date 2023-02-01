@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springbootdemo.PizzaService.domain.DishOrder;
 import org.springbootdemo.PizzaService.domain.OrderItem;
@@ -61,7 +62,7 @@ public class OrderController {
     }
 
     @PostMapping("/order-item")
-    public String putOrder(@ModelAttribute @Valid OrderItem orderItem , Errors errors) {
+    public String putOrder(@ModelAttribute("orderItem") @Valid OrderItem orderItem , Errors errors) {
         
         log.info("POST putOrder: on " + orderItem);
         
@@ -76,7 +77,7 @@ public class OrderController {
     }
 
 
-    @RequestMapping(value="/order/{name}", method = RequestMethod.DELETE)
+    @RequestMapping(value="/order-item/{name}", method = RequestMethod.DELETE)
     public String removeFromCart(@PathVariable String name) {
         log.info("DELETE removeFromCart");
         this.shoppingCart.getObject()
@@ -86,7 +87,8 @@ public class OrderController {
 
     @PostMapping("/order")
     public String processPizza(
-            @ModelAttribute DishOrder orderObject, Errors errors) {
+            @ModelAttribute("orderObject") DishOrder orderObject, Errors errors, HttpServletRequest request) {
+        log.info("Processing pizza: {}", orderObject);
 
         if (errors.hasErrors()) {
             return "order";
@@ -94,9 +96,11 @@ public class OrderController {
 
         orderObject.setDishesOrder(this.shoppingCart.getObject().getContent());
         orderObject.setTotalPrice(this.shoppingCart.getObject().getTotalPrice());
-        log.info("Processing pizza: {}", orderObject);
+        orderObject.setIpAdress(request.getRemoteAddr().toString());
 
-        return "redirect:/checkout/current";
+        log.info("After Processing pizza: {}", orderObject);
+
+        return "redirect:/checkout";
     }
     
 }

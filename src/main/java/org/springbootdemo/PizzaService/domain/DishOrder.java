@@ -1,5 +1,7 @@
 package org.springbootdemo.PizzaService.domain;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springbootdemo.PizzaService.controller.ShoppingCart;
 import java.util.ArrayList;
@@ -15,7 +17,8 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
 
-@Data
+@Getter
+@Setter
 @Slf4j
 public class DishOrder {
     private List<OrderItem> dishesOrder;
@@ -47,8 +50,9 @@ public class DishOrder {
     private String ccCVV;    
     
     public DishOrder() {
-        log.info(" Crate new DishOrder");
         this.sessionId = UUID.randomUUID().toString();
+        log.info(" Create new DishOrder: " + this.sessionId);
+
         //this.dishesOrder = new ArrayList<>();
     }
 

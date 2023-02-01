@@ -5,6 +5,7 @@ import org.springbootdemo.PizzaService.domain.DishOrder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
 import java.util.stream.Collectors;
@@ -14,14 +15,14 @@ import java.util.stream.Collectors;
 @RequestMapping("/checkout")
 @SessionAttributes("orderObject")
 public class CheckoutController {
-
+/*
     @GetMapping("/current")
     public String checkout() {
         return "checkout";
     }
-
+*/
     @GetMapping
-    public String getCheckoutView(@ModelAttribute DishOrder order) {
+    public String getCheckoutView(@ModelAttribute("orderObject") DishOrder order) {
         log.info("GET Create checkout view");
         if (order.getDishesOrder().isEmpty()) {
             return "redirect:/order";
@@ -32,7 +33,7 @@ public class CheckoutController {
     }
 
     @PostMapping
-    public String checkoutOrder(@ModelAttribute @Valid DishOrder orderObject , Errors errors) {
+    public String checkoutOrder(@ModelAttribute("orderObject") @Valid DishOrder orderObject , Errors errors, SessionStatus sessionStatus) {
 
         log.info("POST checkoutOrder " + orderObject);
 
@@ -46,7 +47,8 @@ public class CheckoutController {
             log.warn("Try to checkout empty shopping cart");
             return "redirect:/order";
         } else {
-            return "checkout";
+            sessionStatus.setComplete();
+            return "purchase_report";
         }
 
     }

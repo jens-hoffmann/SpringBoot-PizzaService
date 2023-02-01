@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Pizza Service purchase report</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="style.css" th:href="@{/style.css}" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div class="grid">
+            <h2>Ordered dishes</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th >Dish name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="orderItem : ${orderObject.dishesOrder}">
+                    <td th:text="${orderItem.dish}">
+                        Pizza
+                    </td>
+                    <td th:text="${orderItem.amount}">
+                        Amount
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h2>Will be send to ...</h2>
+            <ul>
+                <li th:text="${orderObject.deliveryName}"/>
+                <li th:text="${orderObject.deliveryStreet}"/>
+                <li th:text="${orderObject.deliveryCity}"/>
+            </ul>
+        </div>
+
+        </div>
+            <h2>Browser infos</h2>
+            <span th:text="${orderObject.ipAdress}"/>
+        <div>
+    </body>
+
+</html>
