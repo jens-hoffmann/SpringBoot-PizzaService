@@ -1,23 +1,19 @@
 package org.springbootdemo.PizzaService.controller;
 
-import java.net.http.HttpRequest;
-import java.util.HashMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springbootdemo.PizzaService.domain.Dish;
 import org.springbootdemo.PizzaService.repository.MenuRepository;
 import org.springbootdemo.PizzaService.repository.OrderRepository;
+import org.springbootdemo.PizzaService.service.ShoppingCart;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springbootdemo.PizzaService.domain.DishOrder;
 import org.springbootdemo.PizzaService.domain.OrderItem;
 import org.springframework.beans.factory.ObjectFactory;
-import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 
 @Slf4j

@@ -83,34 +83,34 @@
             <!-- tag::allButValidation[] -->
             <br/>
 
-            <h3>Here's how I'll pay...</h3>
-            <!-- tag::validatedField[] -->
+<!--            <h3>Here's how I'll pay...</h3>
+            &lt;!&ndash; tag::validatedField[] &ndash;&gt;
             <label for="ccNumber">Credit Card #: </label>
             <input type="text" th:field="*{ccNumber}"/>
-            <!-- end::allButValidation[] -->
+            &lt;!&ndash; end::allButValidation[] &ndash;&gt;
             <span class="validationError"
                   th:if="${#fields.hasErrors('ccNumber')}"
                   th:errors="*{ccNumber}">CC Num Error</span>
-            <!-- tag::allButValidation[] -->
-            <!-- end::validatedField[] -->
+            &lt;!&ndash; tag::allButValidation[] &ndash;&gt;
+            &lt;!&ndash; end::validatedField[] &ndash;&gt;
             <br/>
 
             <label for="ccExpiration">Expiration: </label>
             <input type="text" th:field="*{ccExpiration}"/>
-            <!-- end::allButValidation[] -->
+            &lt;!&ndash; end::allButValidation[] &ndash;&gt;
             <span class="validationError"
                   th:if="${#fields.hasErrors('ccExpiration')}"
                   th:errors="*{ccExpiration}">CC Num Error</span>
-            <!-- tag::allButValidation[] -->
+            &lt;!&ndash; tag::allButValidation[] &ndash;&gt;
             <br/>
 
             <label for="ccCVV">CVV: </label>
             <input type="text" th:field="*{ccCVV}"/>
-            <!-- end::allButValidation[] -->
+            &lt;!&ndash; end::allButValidation[] &ndash;&gt;
             <span class="validationError"
                   th:if="${#fields.hasErrors('ccCVV')}"
                   th:errors="*{ccCVV}">CC Num Error</span>
-            <!-- tag::allButValidation[] -->
+             tag::allButValidation[] -->
             <br/>
 
             <input type="submit" value="Submit Order"/>

@@ -1,4 +1,4 @@
-package org.springbootdemo.PizzaService.controller;
+package org.springbootdemo.PizzaService.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springbootdemo.PizzaService.domain.OrderItem;
