@@ -1,4 +1,4 @@
-package org.springbootdemo.PizzaService.domain;
+package org.springbootdemo.pizzaservice.domain;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;

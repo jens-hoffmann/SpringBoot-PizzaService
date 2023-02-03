@@ -1,16 +1,13 @@
-package org.springbootdemo.PizzaService.controller;
+package org.springbootdemo.pizzaservice.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springbootdemo.PizzaService.domain.DishOrder;
-import org.springbootdemo.PizzaService.domain.Payment;
-import org.springbootdemo.PizzaService.repository.OrderRepository;
-import org.springbootdemo.PizzaService.service.PaymentService;
-import org.springbootdemo.PizzaService.service.ShoppingCart;
+import org.springbootdemo.pizzaservice.domain.DishOrder;
+import org.springbootdemo.pizzaservice.domain.Payment;
+import org.springbootdemo.pizzaservice.repository.OrderRepository;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
 import java.util.stream.Collectors;
@@ -20,11 +17,14 @@ import java.util.stream.Collectors;
 @RequestMapping("/checkout")
 @SessionAttributes("orderObject")
 public class CheckoutController {
+    private final OrderRepository orderRepository;
 
     private final ObjectFactory<Payment> payment;
 
-    public CheckoutController(ObjectFactory<Payment> payment) {
+    public CheckoutController(ObjectFactory<Payment> payment,
+                              OrderRepository orderRepository) {
         this.payment = payment;
+        this.orderRepository = orderRepository;
     }
 
     @GetMapping
@@ -52,7 +52,7 @@ public class CheckoutController {
             log.warn("Try to checkout empty shopping cart");
             return "redirect:/order";
         } else {
-
+            orderRepository.save(orderObject);
             return "redirect:/purchasereport";
         }
 

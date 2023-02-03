@@ -1,8 +1,7 @@
-package org.springbootdemo.PizzaService.service;
+package org.springbootdemo.pizzaservice.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springbootdemo.PizzaService.domain.Payment;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springbootdemo.pizzaservice.domain.Payment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 

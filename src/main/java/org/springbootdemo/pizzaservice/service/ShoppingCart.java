@@ -1,8 +1,9 @@
-package org.springbootdemo.PizzaService.service;
+package org.springbootdemo.pizzaservice.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springbootdemo.PizzaService.domain.OrderItem;
-import org.springbootdemo.PizzaService.repository.MenuRepository;
+import org.springbootdemo.pizzaservice.domain.Dish;
+import org.springbootdemo.pizzaservice.domain.OrderItem;
+import org.springbootdemo.pizzaservice.repository.MenuRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -10,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import org.springbootdemo.PizzaService.domain.OrderItem;
 
 @Slf4j
 @Component
@@ -29,7 +28,7 @@ public class ShoppingCart {
     }
 
     public void add(final OrderItem orderItem) {
-        Optional<OrderItem> first = this.orderItems.stream().filter(orItem -> orItem.getDish().equals(orderItem.getDish())).findFirst();
+        Optional<OrderItem> first = this.orderItems.stream().filter(orItem -> orItem.getDishkey().equals(orderItem.getDishkey())).findFirst();
         if (first.isPresent()) {
             OrderItem it = first.get();
             it.setAmount(it.getAmount() + orderItem.getAmount());
@@ -42,7 +41,7 @@ public class ShoppingCart {
 
     public void removeByName(final String dish) {
         this.orderItems
-                .removeIf(orderItem -> orderItem.getDish().equals(dish));
+                .removeIf(orderItem -> orderItem.getDishkey().equals(dish));
         recalcTotalPrice();
     }
 
@@ -58,8 +57,12 @@ public class ShoppingCart {
     public void recalcTotalPrice() {
         totalPrice = 0.0F;
         for (OrderItem item : orderItems) {
-            log.info("recalcTotalPrice: found dish " + item.getDish());
-            totalPrice += (menuRepository.getPriceForDishName(item.getDish()) * item.getAmount());
+            log.info("recalcTotalPrice: found dish " + item.getDishkey());
+            Optional<Dish> dishForDishName = menuRepository.getDishForDishKey(item.getDishkey());
+            if (dishForDishName.isPresent()) {
+                totalPrice += dishForDishName.get().getPrice() * item.getAmount();
+            }
+
         }
         log.info("recalcTotalPrice: new price is " + totalPrice);
     }

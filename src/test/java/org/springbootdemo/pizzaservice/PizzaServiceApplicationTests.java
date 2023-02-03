@@ -1,4 +1,4 @@
-package org.springbootdemo.PizzaService;
+package org.springbootdemo.pizzaservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

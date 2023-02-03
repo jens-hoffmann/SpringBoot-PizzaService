@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
                     <tr th:each="orderItem : ${orderObject.dishesOrder}">
-                        <td th:text="${orderItem.dish}">
+                        <td th:text="${orderItem.dishname}">
                             Pizza
                         </td>
                         <td th:text="${orderItem.amount}">

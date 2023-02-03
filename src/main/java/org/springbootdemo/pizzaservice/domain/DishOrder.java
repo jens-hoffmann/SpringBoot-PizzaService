@@ -1,22 +1,39 @@
-package org.springbootdemo.PizzaService.domain;
+package org.springbootdemo.pizzaservice.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 import java.util.UUID;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
-
+import javax.validation.constraints.NotNull;
 
 
 @Getter
 @Setter
+@ToString
 @Slf4j
+@Entity
 public class DishOrder {
+
+    @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
+    private Long id;
+
+    @NotNull
+    private String businesskey;
+
+    @OneToMany(                     // Logische Mapping-Annotation
+            mappedBy = "order",       // Profile hat keine Mapping-Information, daher 'schau' bei Photo und profile nache
+            fetch = FetchType.EAGER,    // Wenn Profile geladen wird, sollen die Fotos mitgeladen werden (Standard ist LAZY)
+            cascade = CascadeType.PERSIST)
     private List<OrderItem> dishesOrder;
+
     private Float totalPrice;
     
     private String ipAdress;
@@ -35,10 +52,10 @@ public class DishOrder {
     private String deliveryCity;
 
     public DishOrder() {
-        this.sessionId = UUID.randomUUID().toString();
+
+        businesskey = UUID.randomUUID().toString();
         log.info(" Create new DishOrder: " + this.sessionId);
 
-        //this.dishesOrder = new ArrayList<>();
     }
 
 }

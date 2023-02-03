@@ -1,18 +1,18 @@
-package org.springbootdemo.PizzaService.controller;
+package org.springbootdemo.pizzaservice.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springbootdemo.PizzaService.domain.Dish;
-import org.springbootdemo.PizzaService.repository.MenuRepository;
-import org.springbootdemo.PizzaService.repository.OrderRepository;
-import org.springbootdemo.PizzaService.service.ShoppingCart;
+import org.springbootdemo.pizzaservice.domain.Dish;
+import org.springbootdemo.pizzaservice.repository.MenuRepository;
+import org.springbootdemo.pizzaservice.repository.OrderRepository;
+import org.springbootdemo.pizzaservice.service.ShoppingCart;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import org.springbootdemo.PizzaService.domain.DishOrder;
-import org.springbootdemo.PizzaService.domain.OrderItem;
+import org.springbootdemo.pizzaservice.domain.DishOrder;
+import org.springbootdemo.pizzaservice.domain.OrderItem;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.validation.Errors;
 
@@ -21,19 +21,17 @@ import org.springframework.validation.Errors;
 @SessionAttributes("orderObject")
 public class OrderController {
     private final MenuRepository menuRepository;
-    private final OrderRepository orderRepository;
     private final ObjectFactory<ShoppingCart> shoppingCart;
     
-    public OrderController(MenuRepository menuRepository, OrderRepository orderRepository, ObjectFactory<ShoppingCart> shoppingCart) {
+    public OrderController(MenuRepository menuRepository, ObjectFactory<ShoppingCart> shoppingCart) {
         log.info("Init OrderController");
         this.menuRepository = menuRepository;
-        this.orderRepository = orderRepository;
         this.shoppingCart = shoppingCart;
     }
 
     @ModelAttribute( name = "menuList")
     public List<Dish> getMenu() {
-        return menuRepository.getMenu();
+        return menuRepository.findAll();
     }
 
     @ModelAttribute( name = "orderObject")

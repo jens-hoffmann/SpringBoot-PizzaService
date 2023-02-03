@@ -1,4 +1,4 @@
-package org.springbootdemo.PizzaService.controller;
+package org.springbootdemo.pizzaservice.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

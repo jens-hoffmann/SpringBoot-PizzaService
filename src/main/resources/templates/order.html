@@ -24,7 +24,8 @@
                         <td>
                             <div>
                                 <form  method="POST" th:action="@{/order-item}" th:object="${orderItem}">
-                                    <input  type="hidden" name="dish" th:value="${menu.name}" />
+                                    <input  type="hidden" name="dishkey" th:value="${menu.businesskey}" />
+                                    <input  type="hidden" name="dishname" th:value="${menu.name}" />
                                     <input  name="amount" type="number" value="0" min="1" max="99"/>
                                     <input  type="submit" value="Add"/>
                                 </form>
@@ -49,14 +50,14 @@
             <tfoot />
             <tbody>
                 <tr th:each="orderItem : ${@shoppingCart.content}">
-                    <td th:text="${orderItem.dish}">
+                    <td th:text="${orderItem.dishname}">
                         Margarita
                     </td>
                     <td th:text="${orderItem.amount}">
                         Amount
                     </td>
                     <td>
-                        <form th:method="DELETE" th:action="@{/order-item/{dish}(dish=${orderItem.dish})}" >
+                        <form th:method="DELETE" th:action="@{/order-item/{dish}(dish=${orderItem.dishkey})}" >
                             <button type="submit">Delete</button>
                         </form>
                     </td>

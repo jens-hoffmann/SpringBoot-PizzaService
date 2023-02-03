@@ -1,7 +1,7 @@
-package org.springbootdemo.PizzaService.controller;
+package org.springbootdemo.pizzaservice.controller;
 
-import org.springbootdemo.PizzaService.repository.MenuRepository;
-import org.springbootdemo.PizzaService.domain.Dish;
+import org.springbootdemo.pizzaservice.repository.MenuRepository;
+import org.springbootdemo.pizzaservice.domain.Dish;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +26,7 @@ public class MenuController {
 
     @ModelAttribute( name = "menuList")
     public List<Dish> getMenu() {
-        return menuRepository.getMenu();
+        return menuRepository.findAll();
     }
 
 
