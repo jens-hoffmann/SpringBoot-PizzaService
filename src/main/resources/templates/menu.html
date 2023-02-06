@@ -8,10 +8,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/thymeleaf.html to edit this
     <head>
         <title>Pizza Service Menu</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="style.css" th:href="@{/style.css}" rel="stylesheet" />
+        <link rel="stylesheet"
+              href="webjars/bootstrap/5.2.3/dist/css/bootstrap.css" />
     </head>
 
     <body>
+        <div th:replace="fragments/header :: header(module='menu')">...</div>
         <p data-th-text="#{welcome}">Welcome!</p>
         <table>
             <thead>

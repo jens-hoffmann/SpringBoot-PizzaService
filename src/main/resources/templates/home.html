@@ -7,11 +7,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
       xmlns:th="http://www.thymeleaf.org">    
     <head>
         <title>Pizza service</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet"
+              href="webjars/bootstrap/5.2.3/dist/css/bootstrap.css" />
     </head>
     <body>
-        <h1>Welcome to pizza service</h1>
-         <a th:href="@{/menu}" id="menu">Go to the menu card...</a>
-         <a th:href="@{/order}" id="order">Make an order...</a>
+         <div th:replace="fragments/header :: header(module='home')">...</div>
     </body>
     
 </html>

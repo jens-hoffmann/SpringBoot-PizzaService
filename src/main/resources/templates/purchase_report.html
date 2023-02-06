@@ -4,10 +4,12 @@
     <head>
         <title>Pizza Service purchase report</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="style.css" th:href="@{/style.css}" rel="stylesheet" />
+        <link rel="stylesheet"
+              href="webjars/bootstrap/5.2.3/dist/css/bootstrap.css" />
     </head>
 
     <body>
+        <div th:replace="fragments/header :: header(module='order')">...</div>
         <div class="grid">
             <h2>Ordered dishes</h2>
             <table>

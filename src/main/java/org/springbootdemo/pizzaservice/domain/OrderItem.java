@@ -18,7 +18,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@ToString
 @Table(name = "orderitem")
 public class OrderItem {
 
@@ -30,7 +29,7 @@ public class OrderItem {
     private String businesskey;
 
     @ManyToOne
-    @JoinColumn( name = "dishorder_fkey")
+    @JoinColumn( name = "dishorder")
     private DishOrder order;
 
     @NotNull
@@ -46,5 +45,16 @@ public class OrderItem {
 
     public OrderItem() {
         businesskey = UUID.randomUUID().toString();
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", businesskey='" + businesskey + '\'' +
+                ", dishkey='" + dishkey + '\'' +
+                ", dishname='" + dishname + '\'' +
+                ", amount=" + amount +
+                '}';
     }
 }

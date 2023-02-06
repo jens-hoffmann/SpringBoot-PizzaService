@@ -4,9 +4,11 @@
     <head>
         <meta charset="UTF-8">
         <title>Pizza Service Ordering</title>
-        <link href="style.css" th:href="@{/style.css}" rel="stylesheet" />
+        <link rel="stylesheet"
+              href="webjars/bootstrap/5.2.3/dist/css/bootstrap.css" />
     </head>
     <body>
+        <div th:replace="fragments/header :: header(module='order')">...</div>
         <h1>Put your orders</h1>
         <div class="grid">
             <table>

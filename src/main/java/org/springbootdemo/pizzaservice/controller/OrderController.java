@@ -88,7 +88,11 @@ public class OrderController {
             return "order";
         }
 
-        orderObject.setDishesOrder(this.shoppingCart.getObject().getContent());
+        List<OrderItem> orderItems = this.shoppingCart.getObject().getContent();
+        for (OrderItem orderItem : orderItems) {
+            orderItem.setOrder(orderObject);
+        }
+        orderObject.setDishesOrder(orderItems);
         orderObject.setTotalPrice(this.shoppingCart.getObject().getTotalPrice());
         orderObject.setIpAdress(request.getRemoteAddr().toString());
 

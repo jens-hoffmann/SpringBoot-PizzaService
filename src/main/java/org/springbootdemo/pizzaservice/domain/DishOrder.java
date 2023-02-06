@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-@ToString
 @Slf4j
 @Entity
 public class DishOrder {
@@ -31,7 +30,7 @@ public class DishOrder {
     @OneToMany(                     // Logische Mapping-Annotation
             mappedBy = "order",       // Profile hat keine Mapping-Information, daher 'schau' bei Photo und profile nache
             fetch = FetchType.EAGER,    // Wenn Profile geladen wird, sollen die Fotos mitgeladen werden (Standard ist LAZY)
-            cascade = CascadeType.PERSIST)
+            cascade = CascadeType.ALL)
     private List<OrderItem> dishesOrder;
 
     private Float totalPrice;
@@ -58,4 +57,18 @@ public class DishOrder {
 
     }
 
+    @Override
+    public String toString() {
+        return "DishOrder{" +
+                "id=" + id +
+                ", businesskey='" + businesskey + '\'' +
+                ", totalPrice=" + totalPrice +
+                ", ipAdress='" + ipAdress + '\'' +
+                ", sessionId='" + sessionId + '\'' +
+                ", deliveryName='" + deliveryName + '\'' +
+                ", deliveryStreet='" + deliveryStreet + '\'' +
+                ", deliveryZipCode='" + deliveryZipCode + '\'' +
+                ", deliveryCity='" + deliveryCity + '\'' +
+                '}';
+    }
 }

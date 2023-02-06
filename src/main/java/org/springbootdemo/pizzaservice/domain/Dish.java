@@ -19,7 +19,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@ToString
 @Table(name = "dish")
 public class Dish {
 
@@ -46,5 +45,15 @@ public class Dish {
         this();
         this.name = name;
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Dish{" +
+                "id=" + id +
+                ", businesskey='" + businesskey + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                '}';
     }
 }
