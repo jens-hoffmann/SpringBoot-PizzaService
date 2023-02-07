@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pizza Service Checkout</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet"
+          href="webjars/bootstrap/5.2.3/dist/css/bootstrap.css"/>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header(module='staff')">...</div>
+<div class="container">
+    <main>
+        <div class="py-5 text-center">
+            <h1>Staff area</h1>
+            <h2 data-th-text="${staffuserlongname}">Staffuser</h2>
+            <p class="lead">This is for internal staff members of the pizza service to manage orders and menu card.</p>
+        </div>
+
+    </main>
+</div>
+</body>
