@@ -32,8 +32,11 @@ public class ShoppingCart {
         if (first.isPresent()) {
             OrderItem it = first.get();
             it.setAmount(it.getAmount() + orderItem.getAmount());
+            recalcItemPrice(it);
         } else {
+            recalcItemPrice(orderItem);
             this.orderItems.add(orderItem);
+
         }
         recalcTotalPrice();
 
@@ -53,7 +56,12 @@ public class ShoppingCart {
     public float getTotalPrice() {
         return this.totalPrice;
     }
-
+    public void recalcItemPrice(OrderItem item) {
+        Optional<Dish> dishForDishName = menuRepository.getDishForDishKey(item.getDishkey());
+        if (dishForDishName.isPresent()) {
+            item.setPrice(dishForDishName.get().getPrice() * item.getAmount());
+        }
+    }
     public void recalcTotalPrice() {
         totalPrice = 0.0F;
         for (OrderItem item : orderItems) {

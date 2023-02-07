@@ -37,11 +37,15 @@ public class OrderItem {
 
     @NotNull
     private String dishname;
-    
+
+
     @NotNull
     @Min(value = 1, message = "No negative number of dishes allowed")
     @Max(value = 99, message = "Number of dishes exceed max allowed 99" )
     private int amount;
+
+    @NotNull
+    private float price;
 
     public OrderItem() {
         businesskey = UUID.randomUUID().toString();
@@ -55,6 +59,7 @@ public class OrderItem {
                 ", dishkey='" + dishkey + '\'' +
                 ", dishname='" + dishname + '\'' +
                 ", amount=" + amount +
+                ", price=" + price +
                 '}';
     }
 }

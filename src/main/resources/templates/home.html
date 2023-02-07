@@ -13,6 +13,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </head>
     <body>
          <div th:replace="fragments/header :: header(module='home')">...</div>
+         <div class="container">
+             <main>
+                 <div class="py-5 text-center">
+                     <img class="d-block mx-auto mb-4" src="pizza.svg" alt="" width="72" height="57">
+                     <h1 data-th-text="#{welcome}">Welcome!</h1>
+                     <p class="lead">This is a Spring Boot demo project for training purpose.</p>
+                 </div>
+
+             </main>
+
+         </div>
     </body>
     
 </html>

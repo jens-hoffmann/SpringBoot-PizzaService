@@ -9,68 +9,79 @@
     </head>
     <body>
         <div th:replace="fragments/header :: header(module='order')">...</div>
-        <h1>Put your orders</h1>
-        <div class="grid">
-            <table>
-                <thead>
-                    <tr>
-                        <th th:text="#{msgs.headers.name}">Name</th>
-                        <th th:text="#{msgs.headers.price}">Price</th>
-                        <th th:text="#{msgs.headers.amount}">Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="menu: ${menuList}">
-                        <td th:text="${menu.name}">Oranges</td>
-                        <td th:text="${#numbers.formatDecimal(menu.price, 1, 2)}">0.99</td>
-                        <td>
-                            <div>
-                                <form  method="POST" th:action="@{/order-item}" th:object="${orderItem}">
-                                    <input  type="hidden" name="dishkey" th:value="${menu.businesskey}" />
-                                    <input  type="hidden" name="dishname" th:value="${menu.name}" />
-                                    <input  name="amount" type="number" value="0" min="1" max="99"/>
-                                    <input  type="submit" value="Add"/>
-                                </form>
-                            </div>
-                        </td>
+        <div class="container">
+            <main>
+                <div class="py-5 text-center">
+                    <h1>Order pizzas and more</h1>
+                    <p class="lead">Choose the number of your desired dish and push Add to add it to your shopping cart.</p>
+                </div>
+                <div class="row g-5">
+                    <div class="col-md-5 col-lg-4 order-md-last" th:object="${orderObject}">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-primary" >Your cart</span>
+                            <span class="badge bg-primary rounded-pill"  th:text="${#lists.size(@shoppingCart.content)}">99</span>
+                        </h4>
+                        <ul class="list-group mb-3" >
+                            <li class="list-group-item d-flex justify-content-between lh-sm" th:each="orderItem : ${@shoppingCart.content}">
+                                <div>
 
-                    </tr>
-                </tbody>
-            </table>
+                                    <span class="my-0" th:text="${orderItem.amount}">Amount</span>
+                                    <span class="my-0" >x </span>
+                                    <span class="my-0" th:text="${orderItem.dishname}">Product name</span>
+                                    <form th:method="DELETE" th:action="@{/order-item/{dish}(dish=${orderItem.dishkey})}" >
+                                        <button type="submit">Delete</button>
+                                    </form>
+                                </div>
+                                <span class="text-muted" th:text="${orderItem.price}">$12</span>
+                            </li>
 
-        </div>
-        </div>
-        </form>
-        <hr />
-        <p>Selected</p>
-        <table>
-            <thead>
-                <tr>
-                    <th >Dish name</th>
-                </tr>
-            </thead>
-            <tfoot />
-            <tbody>
-                <tr th:each="orderItem : ${@shoppingCart.content}">
-                    <td th:text="${orderItem.dishname}">
-                        Margarita
-                    </td>
-                    <td th:text="${orderItem.amount}">
-                        Amount
-                    </td>
-                    <td>
-                        <form th:method="DELETE" th:action="@{/order-item/{dish}(dish=${orderItem.dishkey})}" >
-                            <button type="submit">Delete</button>
+
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Total (USD)</span>
+                                <strong th:text="${@shoppingCart.totalPrice}">$20</strong>
+                            </li>
+                        </ul>
+                        <form  method="POST" th:action="@{/order}" th:object="${orderObject}">
+                            <input  type="submit" value="Checkout Shopping cart"/>
                         </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <br/>
-        <label for="totalPrice">Total Price</label>
-        <span th:text="${@shoppingCart.totalPrice}">total price</span></li>
-        <form  method="POST" th:action="@{/order}" th:object="${orderObject}">
-            <input  type="submit" value="Checkout Shopping cart"/>
-        </form>        
+
+                    </div>
+
+                <div class="col-md-7 col-lg-8">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th th:text="#{msgs.headers.name}">Name</th>
+                            <th th:text="#{msgs.headers.price}">Price</th>
+                            <th th:text="#{msgs.headers.amount}">Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="menu: ${menuList}">
+                            <td th:text="${menu.name}">Oranges</td>
+                            <td th:text="${#numbers.formatDecimal(menu.price, 1, 2)}">0.99</td>
+                            <td>
+                                <div>
+                                    <form  method="POST" th:action="@{/order-item}" th:object="${orderItem}">
+                                        <input  type="hidden" name="dishkey" th:value="${menu.businesskey}" />
+                                        <input  type="hidden" name="dishname" th:value="${menu.name}" />
+                                        <input  name="amount" type="number" value="0" min="1" max="99"/>
+                                        <input  type="submit" value="Add"/>
+                                    </form>
+                                </div>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                </div>
+
+          </main>
+        </div>
+
+
     </body>
 </html>
