@@ -46,6 +46,7 @@
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">Billing address</h4>
                 <form class="needs-validation" method="POST" th:action="@{/checkout}" th:object="${orderObject}">
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                     <!-- end::allButValidation[] -->
                     <div th:if="${#fields.hasErrors()}">
                 <div class="invalid-feedback">

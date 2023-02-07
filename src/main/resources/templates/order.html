@@ -63,6 +63,7 @@
                             <td>
                                 <div>
                                     <form  method="POST" th:action="@{/order-item}" th:object="${orderItem}">
+                                        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                                         <input  type="hidden" name="dishkey" th:value="${menu.businesskey}" />
                                         <input  type="hidden" name="dishname" th:value="${menu.name}" />
                                         <input  name="amount" type="number" value="0" min="1" max="99"/>

@@ -26,7 +26,8 @@
 
             <!-- tag::thAction[] -->
             <form class="needs-validation" method="POST" th:action="@{/login}" id="loginForm">
-                <!-- end::thAction[] -->
+
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                 <label for="username" class="form-label">Username: </label>
                 <input type="text" class="form-control" name="username" id="username" /><br/>
 

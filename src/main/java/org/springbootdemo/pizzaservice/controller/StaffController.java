@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springbootdemo.pizzaservice.domain.StaffUser;
 import org.springbootdemo.pizzaservice.repository.StaffUserRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,10 +25,9 @@ public class StaffController {
 
     @GetMapping
     @PreAuthorize("hasRole('USER')")
-    public String staffLanding(Model model, SessionStatus sessionStatus, Principal principal) {
-        String staffuserlongname = staffUserRepository.findByUsername(principal.getName()).getFullname();
-        log.info("GET staffLanding: " + staffuserlongname);
-        model.addAttribute("staffuserlongname", staffuserlongname);
+    public String staffLanding(Model model, SessionStatus sessionStatus, @AuthenticationPrincipal StaffUser staffUser) {
+        log.info("GET staffLanding: " + staffUser.getFullname());
+        model.addAttribute("staffuserlongname", staffUser.getFullname());
         return "staff";
     }
 }
