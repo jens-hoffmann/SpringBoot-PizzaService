@@ -18,4 +18,6 @@ import org.springframework.stereotype.Repository;
 public interface MenuRepository extends JpaRepository<Dish, Long> {
     @Query("SELECT d FROM Dish d WHERE d.businesskey = :dishkey")
     Optional<Dish> getDishForDishKey(String dishkey);
+
+
 }

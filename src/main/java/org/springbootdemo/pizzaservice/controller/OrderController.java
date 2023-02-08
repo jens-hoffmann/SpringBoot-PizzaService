@@ -71,7 +71,7 @@ public class OrderController {
     }
 
 
-    @RequestMapping(value="/order-item/{name}", method = RequestMethod.DELETE)
+    @DeleteMapping("/order-item/{name}")
     public String removeFromCart(@PathVariable String name) {
         log.info("DELETE removeFromCart");
         this.shoppingCart.getObject()

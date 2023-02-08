@@ -24,7 +24,7 @@ public class StaffController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('STAFF')")
     public String staffLanding(Model model, SessionStatus sessionStatus, @AuthenticationPrincipal StaffUser staffUser) {
         log.info("GET staffLanding: " + staffUser.getFullname());
         model.addAttribute("staffuserlongname", staffUser.getFullname());

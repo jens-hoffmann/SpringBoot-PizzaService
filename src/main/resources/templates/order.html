@@ -24,12 +24,12 @@
                         <ul class="list-group mb-3" >
                             <li class="list-group-item d-flex justify-content-between lh-sm" th:each="orderItem : ${@shoppingCart.content}">
                                 <div>
-
                                     <span class="my-0" th:text="${orderItem.amount}">Amount</span>
                                     <span class="my-0" >x </span>
                                     <span class="my-0" th:text="${orderItem.dishname}">Product name</span>
                                     <form th:method="DELETE" th:action="@{/order-item/{dish}(dish=${orderItem.dishkey})}" >
-                                        <button type="submit">Delete</button>
+
+                                        <button type="submit" class="btn btn-secondary">Delete</button>
                                     </form>
                                 </div>
                                 <span class="text-muted" th:text="${orderItem.price}">$12</span>
@@ -42,7 +42,7 @@
                             </li>
                         </ul>
                         <form  method="POST" th:action="@{/order}" th:object="${orderObject}">
-                            <input  type="submit" value="Checkout Shopping cart"/>
+                            <input class="btn btn-primary" type="submit" value="Checkout Shopping cart" />
                         </form>
 
                     </div>
