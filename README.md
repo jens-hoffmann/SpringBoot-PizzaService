@@ -10,21 +10,21 @@ This is a small prototype demo for Spring Boot Web MVC
 
 ### Build Project
 
-1. Compile 
+##### Compile 
 
 <code>mvn clean compile</code>
 
-2. Run Spring Boot in dev mode with H2 memory database
+##### Run Spring Boot in dev mode with H2 memory database
 
 <code>mvn spring-boot:run -Dspring-boot.run.arguments="--spring.profiles.active=dev"</code>
 
-3. Build docker image
+##### Build docker image
 
 This command may require root or administrator privileges if you are not running docker rootless ! 
 
 <code>mvn spring-boot:build-image -DskipTests</code>
 
-4. Run docker compose
+##### Run docker compose
 
 Start docker compose file:
 
@@ -34,7 +34,7 @@ Check log messages of docker
 
 <code>docker-compose logs -f</code>
 
-5. Check out running services
+##### Check out running services
 
 Take your browser and checkout running services.
 
