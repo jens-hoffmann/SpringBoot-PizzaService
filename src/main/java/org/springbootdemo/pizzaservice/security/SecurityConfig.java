@@ -1,6 +1,7 @@
 package org.springbootdemo.pizzaservice.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,9 +22,10 @@ public class SecurityConfig {
         return http
                 .authorizeRequests()
                     .antMatchers("/staff", "/editmenu").hasRole("STAFF")
-                    .antMatchers("/", "/**", "/h2-console/**")
-                    .permitAll()
-
+                    .antMatchers("/", "/**", "/h2-console/**").permitAll()
+                    .requestMatchers(EndpointRequest.to("health", "info")).permitAll()
+                    //.requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ENDPOINT_ADMIN")
+                    .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                 .and()
                     .formLogin()
                     .loginPage("/login")

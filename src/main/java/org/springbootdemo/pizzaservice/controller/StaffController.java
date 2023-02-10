@@ -28,6 +28,7 @@ public class StaffController {
     public String staffLanding(Model model, SessionStatus sessionStatus, @AuthenticationPrincipal StaffUser staffUser) {
         log.info("GET staffLanding: " + staffUser.getFullname());
         model.addAttribute("staffuserlongname", staffUser.getFullname());
+
         return "staff";
     }
 }

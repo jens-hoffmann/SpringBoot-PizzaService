@@ -2,8 +2,7 @@ version: '3'
 services:
     database:
         image: mariadb:10.6
-        container_name: 'pizzaservice_dbhost'
-        restart: always
+        container_name: 'dbhost'
         ports:
             - '3306:3306'
         environment:
@@ -13,28 +12,64 @@ services:
             MYSQL_ROOT_PASSWORD: 'secretsofroot'
         volumes:
             - ./db:/var/lib/mysql
-            - ./init:/docker-entrypoint-initdb.d
+            - ./init/mysql:/docker-entrypoint-initdb.d
+        networks:
+            - internal
 
     phpmyadmin:
         image: phpmyadmin:latest
         depends_on:
             - database
-        container_name: 'pizzaservice_phpmyadmin'
-        restart: always
+        container_name: 'phpmyadmin'
         ports:
             - '8090:80'
+
         environment:
-            PMA_HOST: 'pizzaservice_dbhost'
+            PMA_HOST: 'dbhost'
             PMA_USER: 'root'
             PMA_PASSWORD: 'secretsofroot'
+        networks:
+            - internal
 
-#    application:
-#        image: springbootdemo.pizzaservice
-#        container_name: 'pizzaservice_app'
-#        ports:
-#            - '8080:8080'
-#        restart: always
-#        environment:
-#            - SPRING_DATASOURCE_URL=jdbc:mysql://pizzaservice_dbhost:3306/pizzadb
-#            - SPRING_DATASOURCE_USERNAME=user
-#             - SPRING_DATASOURCE_PASSWORD=secretsofuser
+    application:
+        image: springbootdemo.pizzaservice
+        depends_on:
+            - database
+        container_name: 'app'
+        ports:
+            - '8080:8080'
+        environment:
+            - SPRING_DATASOURCE_URL=jdbc:mysql://dbhost:3306/pizzadb
+            - SPRING_DATASOURCE_USERNAME=user
+            - SPRING_DATASOURCE_PASSWORD=secretsofuser
+        networks:
+            - internal
+
+    prometheus:
+        image: 'prom/prometheus:latest'
+        container_name: 'prometheus'
+        depends_on:
+            - database
+            - application
+        ports:
+            - '9090:9090'
+        command: '--config.file=/etc/prometheus/config.yml'
+        volumes:
+            - './init/prometheus/prometheus.yml:/etc/prometheus/config.yml'
+        networks:
+            - internal
+
+    grafana:
+        depends_on:
+            - prometheus
+        image: 'grafana/grafana:latest'
+        container_name: 'grafana'
+        ports:
+            - '3000:3000'
+        networks:
+            - internal
+        volumes:
+            - './init/grafana/prometheus_ds.yml:/etc/grafana/provisioning/datasources/prometheus_ds.yml'
+
+networks:
+    internal:
