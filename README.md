@@ -1,6 +1,6 @@
-# Pizza Service - Spring Boot Web MVC Demo
+# Pizza Service - Spring Boot Web MVC Demo with Camunda BPMN workflow service
 
-This is a small prototype demo for Spring Boot Web MVC 
+This is a small prototype demo for Spring Boot Web MVC connected to Camunda BPMN workflow engine
 
 ## Prerequisite
 
@@ -14,7 +14,9 @@ This is a small prototype demo for Spring Boot Web MVC
 
 <code>mvn clean compile</code>
 
-#### Run Spring Boot in dev mode with H2 memory database
+#### Run Spring Boot Web app in dev mode with H2 memory database
+
+
 
 <code>mvn spring-boot:run -Dspring-boot.run.arguments="--spring.profiles.active=dev"</code>
 

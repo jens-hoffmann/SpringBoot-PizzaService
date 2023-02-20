@@ -14,8 +14,8 @@
 	<groupId>org.jhoffmann</groupId>
 	<artifactId>pizzaservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>PhotostoryBook Service</name>
-	<description>Backend service for PhotostoryBook app</description>
+	<name>PizzaService</name>
+	<description>Spring Boot Web App with Camunda workflow engine</description>
 
 	<modules>
 		<module>springbootwebapp</module>

@@ -31,5 +31,5 @@ nbactions.xml
 ### VS Code ###
 .vscode/
 
-db/*
+*.db
 

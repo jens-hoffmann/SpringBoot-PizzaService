@@ -30,8 +30,22 @@ services:
             PMA_PASSWORD: 'secretsofroot'
         networks:
             - internal
+    artemis:
+        image: quay.io/artemiscloud/activemq-artemis-broker
+        container_name: 'artemis'
+        depends_on:
+            - database
+        ports:
+            - "8161:8161"
+            - "61616:61616"
+            - "5672:5672"
+        environment:
+            AMQ_USER: admin
+            AMQ_PASSWORD: secretsofadmin
+        networks:
+            - internal
 
-    application:
+    webapplication:
         image: springbootdemo.pizzaservice
         depends_on:
             - database
@@ -50,7 +64,7 @@ services:
         container_name: 'prometheus'
         depends_on:
             - database
-            - application
+            - webapplication
         ports:
             - '9090:9090'
         command: '--config.file=/etc/prometheus/config.yml'

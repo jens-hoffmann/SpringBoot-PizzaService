@@ -4,3 +4,8 @@ server:
 camunda.bpm.admin-user:
   id: demo
   password: demo
+
+
+pizzaservice:
+  jms:
+    kitchen_incoming_queue: KitchenIncomingQueue
