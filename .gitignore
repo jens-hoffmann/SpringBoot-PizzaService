@@ -32,4 +32,5 @@ nbactions.xml
 .vscode/
 
 *.db
+db/
 

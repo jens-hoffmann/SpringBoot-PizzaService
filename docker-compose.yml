@@ -32,6 +32,7 @@ services:
             - internal
     artemis:
         image: quay.io/artemiscloud/activemq-artemis-broker
+        domainname: 'artemis'
         container_name: 'artemis'
         depends_on:
             - database
@@ -46,9 +47,10 @@ services:
             - internal
 
     webapplication:
-        image: springbootdemo.pizzaservice
+        image: pizzaservice.webapplication
         depends_on:
             - database
+            - artemis
         container_name: 'app'
         ports:
             - '8080:8080'
@@ -56,6 +58,25 @@ services:
             - SPRING_DATASOURCE_URL=jdbc:mysql://dbhost:3306/pizzadb
             - SPRING_DATASOURCE_USERNAME=user
             - SPRING_DATASOURCE_PASSWORD=secretsofuser
+            - SPRING_PROFILES_ACTIVE=mysql
+            - SPRING_ARTEMIS_BROKER_URL=tcp://artemis:61616
+            - SPRING_ARTEMIS_USER=admin
+            - SPRING_ARTEMIS_PASSWORD=secretsofadmin
+        networks:
+            - internal
+
+    workflowservice:
+        image: pizzaservice.workflowservice
+        depends_on:
+            - webapplication
+            - artemis
+        container_name: 'workflowservice'
+        ports:
+            - '8081:8081'
+        environment:
+            - SPRING_ARTEMIS_BROKER_URL=tcp://artemis:61616
+            - SPRING_ARTEMIS_USER=admin
+            - SPRING_ARTEMIS_PASSWORD=secretsofadmin
         networks:
             - internal
 

@@ -103,7 +103,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <image>
-                        <name>springbootdemo.pizzaservice</name>
+                        <name>pizzaservice.webapplication</name>
                     </image>
                     <excludes>
                         <exclude>

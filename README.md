@@ -24,7 +24,12 @@ This is a small prototype demo for Spring Boot Web MVC connected to Camunda BPMN
 
 This command may require root or administrator privileges if you are not running docker rootless ! 
 
-<code>mvn spring-boot:build-image -DskipTests</code>
+
+<code>cd springbootwebapp</code>
+<code>mvn spring-boot:build-image -Dspring-boot.run.arguments="--spring.profiles.active=mysql" -DskipTests</code>
+
+<code>cd workflowservice</code>
+<code>mvn spring-boot:build-image  -DskipTests</code>
 
 #### Run docker compose
 
@@ -41,6 +46,8 @@ Check log messages of docker
 Take your browser and checkout running services.
 
 [SpringBoot App](http://localhost:8080)
+
+[Camunda Workflow Engine](http://localhost:8081)  Login with user: demo and password: demo for demonstration purposes
 
 [PHPMyAdmin](http://localhost:8090)  for demonstration purposes with database administrator privileges 
 
