@@ -5,11 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.runtime.EventSubscription;
+import org.camunda.bpm.engine.runtime.MessageCorrelationResult;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.jhoffmann.workflowservice.domain.OrderItemPOJO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -27,13 +32,18 @@ public class JmsReceiverService {
         OrderItemPOJO orderItemPOJO= null;
         try {
             orderItemPOJO = new ObjectMapper().readValue(message, OrderItemPOJO.class);
-            log.info("Received OrderItem through JMS: "+ orderItemPOJO);
-            ProcessInstance pi = runtimeService.startProcessInstanceByKey("IncomingOrder");
+            log.info("JmsReceiverService: Received OrderItem through JMS: "+ orderItemPOJO);
 
-            EventSubscription subscription = runtimeService.createEventSubscriptionQuery()
-                    .processInstanceId(pi.getId()).eventType("message").singleResult();
+            Map<String, Object> processVariables = new HashMap<>();
+            String businesskey = orderItemPOJO.getBusinesskey();
+            processVariables.put("dishname", orderItemPOJO.getDishname());
+            processVariables.put("amount", orderItemPOJO.getAmount());
 
-            runtimeService.messageEventReceived(subscription.getEventName(), subscription.getExecutionId());
+            //ProcessInstance pi = runtimeService.startProcessInstanceByMessage("newIncomingOrderMessage");
+            ProcessInstance pi = runtimeService.startProcessInstanceByMessage("newIncomingOrderMessage", businesskey, processVariables);
+            String processInstanceId = pi.getProcessInstanceId();
+            log.info("JmsReceiverService: Started process instance " + processInstanceId);
+
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e); // TODO add custom exception with error handling
         }

@@ -9,3 +9,4 @@ camunda.bpm.admin-user:
 pizzaservice:
   jms:
     kitchen_incoming_queue: KitchenIncomingQueue
+    kitchen_outgoing_queue: KitchenOutgoingQueue
