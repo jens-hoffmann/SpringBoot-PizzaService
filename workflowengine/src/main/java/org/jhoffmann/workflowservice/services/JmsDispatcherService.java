@@ -16,14 +16,14 @@ public class JmsDispatcherService {
 
     private final JmsTemplate jmsTemplate;
 
-    @Value("${pizzaservice.jms.kitchen_outgoing_queue}")
+    @Value("${jms.orderitem.kitchen_outgoing_queue}")
     private String jmsQueue;
 
     public JmsDispatcherService(JmsTemplate jmsTemplate) {
         this.jmsTemplate = jmsTemplate;
     }
 
-    public void sendMessage(String message) {
+    public void sendOrderItemToWebApp(String message) {
         jmsTemplate.convertAndSend(jmsQueue, message);
     }
 

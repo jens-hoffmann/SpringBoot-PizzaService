@@ -17,6 +17,8 @@ import java.util.UUID;
 @Table(name = "orderitem")
 public class OrderItem {
 
+    enum DishStatus { NEW, COOKED, DELIVERED }
+
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
     private Long id;
@@ -25,7 +27,7 @@ public class OrderItem {
     private String businesskey;
 
     @ManyToOne
-    @JoinColumn( name = "dishorder")
+    @JoinColumn( name = "dishorder_fk")
     private DishOrder order;
 
     @NotNull
@@ -43,8 +45,12 @@ public class OrderItem {
     @NotNull
     private float price;
 
+    @Enumerated(EnumType.STRING)
+    DishStatus dishStatus;
+
     public OrderItem() {
         businesskey = UUID.randomUUID().toString();
+        this.dishStatus = DishStatus.NEW;
     }
 
     @Override
@@ -56,6 +62,7 @@ public class OrderItem {
                 ", dishname='" + dishname + '\'' +
                 ", amount=" + amount +
                 ", price=" + price +
+                ", dishStatus=" + dishStatus +
                 '}';
     }
 }

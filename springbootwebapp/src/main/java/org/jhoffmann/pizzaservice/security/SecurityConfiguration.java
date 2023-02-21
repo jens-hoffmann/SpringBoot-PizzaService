@@ -38,6 +38,11 @@ public class SecurityConfiguration {
                     .ignoringAntMatchers("/h2-console/**")
 
                 .and()
+                .headers()
+                .frameOptions().disable()
+
+
+                .and()
                     .build();
     }
 

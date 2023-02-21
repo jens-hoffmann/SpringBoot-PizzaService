@@ -5,8 +5,13 @@ camunda.bpm.admin-user:
   id: demo
   password: demo
 
+spring:
+  artemis:
+    broker-url=tcp://localhost:61616
+    user=admin
+    password=secretsofadmin
 
-pizzaservice:
-  jms:
-    kitchen_incoming_queue: KitchenIncomingQueue
-    kitchen_outgoing_queue: KitchenOutgoingQueue
+jms:
+  orderitem:
+    kitchen_incoming_queue: KitchenIncomingOrderItemQueue
+    kitchen_outgoing_queue: KitchenOutgoingOrderItemQueue

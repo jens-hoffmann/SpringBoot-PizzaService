@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class JmsReceiverService {
 
-    @JmsListener(destination = "${pizzaservice.jms.kitchen_outgoing_queue}", containerFactory = "myFactory")
-    public void receiveOrderItem(String message) {
+    @JmsListener(destination = "${jms.orderitem.kitchen_outgoing_queue}", containerFactory = "myFactory")
+    public void receiveOrderItemFromKitchen(String message) {
         log.info("JmsReceiverService: message from kitchen_outgoing_queue : "  + message);
     }
 }

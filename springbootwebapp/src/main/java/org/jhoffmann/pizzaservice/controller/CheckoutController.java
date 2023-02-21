@@ -58,11 +58,11 @@ public class CheckoutController {
         } else {
             orderRepository.save(orderObject);
             List<OrderItemPOJO> orderitemppojolist = orderObject.getDishesOrder().stream()
-                    .map(item -> new OrderItemPOJO(item.getBusinesskey(), item.getDishkey(), item.getDishname(), item.getAmount()))
+                    .map(item -> new OrderItemPOJO(item.getBusinesskey(), item.getDishkey(), item.getDishname(), item.getOrder().getBusinesskey(), item.getAmount()))
                     .collect(Collectors.toList());
             orderitemppojolist.forEach(pojo -> {
                 try {
-                    jmsDispatcherService.sendOrderItem(pojo);
+                    jmsDispatcherService.sendOrderItemToKitchen(pojo);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

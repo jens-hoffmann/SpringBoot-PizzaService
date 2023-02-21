@@ -20,6 +20,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class DishOrder {
 
+
+
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long id;
@@ -51,10 +53,8 @@ public class DishOrder {
     private String deliveryCity;
 
     public DishOrder() {
-
         businesskey = UUID.randomUUID().toString();
         log.info(" Create new DishOrder: " + this.sessionId);
-
     }
 
     @Override

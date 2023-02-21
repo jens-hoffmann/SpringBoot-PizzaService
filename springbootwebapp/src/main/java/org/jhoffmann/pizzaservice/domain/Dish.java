@@ -34,8 +34,7 @@ public class Dish {
     private String name;
     
     @NotNull
-    private float price ;
-
+    private float price;
 
     public Dish() {
         businesskey = UUID.randomUUID().toString();
@@ -45,6 +44,7 @@ public class Dish {
         this();
         this.name = name;
         this.price = price;
+
     }
 
     @Override

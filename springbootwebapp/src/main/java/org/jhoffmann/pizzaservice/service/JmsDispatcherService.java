@@ -18,18 +18,14 @@ public class JmsDispatcherService {
 
     private final JmsTemplate jmsTemplate;
 
-    @Value("${pizzaservice.jms.kitchen_incoming_queue}")
+    @Value("${jms.orderitem.kitchen_incoming_queue}")
     private String jmsQueue;
 
     public JmsDispatcherService(JmsTemplate jmsTemplate) {
         this.jmsTemplate = jmsTemplate;
     }
 
-    public void sendMessage(String message) {
-        jmsTemplate.convertAndSend(jmsQueue, message);
-    }
-
-    public void sendOrderItem(OrderItemPOJO orderItem) {
+    public void sendOrderItemToKitchen(OrderItemPOJO orderItem) {
         log.debug("JmsDispatcherService: sendOrderItem:" + orderItem);
         String serializedString = null;
         try {
