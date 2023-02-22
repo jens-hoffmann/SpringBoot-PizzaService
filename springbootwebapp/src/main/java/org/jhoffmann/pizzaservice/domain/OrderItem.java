@@ -17,7 +17,7 @@ import java.util.UUID;
 @Table(name = "orderitem")
 public class OrderItem {
 
-    enum DishStatus { NEW, COOKED, DELIVERED }
+    public enum DishStatus { NEW, COOKED, DELIVERED }
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )

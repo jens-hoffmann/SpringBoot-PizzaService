@@ -2,7 +2,7 @@
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0lu75sh" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.8.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
   <bpmn:process id="IncomingOrder" name="IncomingOrder" isExecutable="true">
     <bpmn:sequenceFlow id="Flow_0fxhsgh" sourceRef="IncomingOrderStartEvent" targetRef="Cooking" />
-    <bpmn:userTask id="Cooking" name="Cook the dish">
+    <bpmn:userTask id="Cooking" name="Cook the dish" camunda:formKey="embedded:app:forms/orderItemForm.html">
       <bpmn:incoming>Flow_0fxhsgh</bpmn:incoming>
       <bpmn:outgoing>Flow_0ibjy3s</bpmn:outgoing>
     </bpmn:userTask>

@@ -1,0 +1,32 @@
+<form role="form" class="form-horizontal">
+
+    <script cam-script type="text/form-script">
+
+        var orderItem = $scope.orderItem = {};
+
+        camForm.on('form-loaded', function() {
+          // tell the form SDK to fetch the json variable named 'orderItem'
+          camForm.variableManager.fetchVariable('orderItem');
+        });
+
+        camForm.on('variables-fetched', function() {
+          // work with the variable (bind it to the current AngularJS $scope)
+          $scope.orderItem = camForm.variableManager.variableValue('orderItem');
+        });
+
+    </script>
+
+    <div class="control-group">
+        <label class="control-label" for="dishname">Dish name</label>
+        <div class="controls">
+            <input id="dishname" class="form-control" type="text" ng-model="orderItem.dishname"  readonly/>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="amount">Amount</label>
+        <div class="controls">
+            <input id="amount" class="form-control" type="number" ng-model="orderItem.amount"  readonly />
+        </div>
+    </div>
+</form>
