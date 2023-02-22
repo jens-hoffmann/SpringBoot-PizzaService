@@ -39,18 +39,14 @@ public class JmsReceiverService {
             orderItemPOJO = new ObjectMapper().readValue(message, OrderItemPOJO.class);
             log.info("JmsReceiverService: Received OrderItem through JMS: "+ orderItemPOJO);
 
-            //Map<String, Object> processVariables = new HashMap<>();
             String businesskey = orderItemPOJO.getBusinesskey();
+
+            ProcessInstance pi = runtimeService.startProcessInstanceByMessage("newIncomingOrderMessage");
             String serializedString = new ObjectMapper().writeValueAsString(orderItemPOJO);
+            JsonValue jsonValue = SpinValues.jsonValue(serializedString).create();
+            runtimeService.setVariable(pi.getId(), "orderItem", jsonValue);
 
-            VariableMap processVariables =
-                    Variables.createVariables()
-                            .putValueTyped("orderItem", Variables.objectValue(orderItemPOJO).serializationDataFormat(Variables.SerializationDataFormats.JSON).create());
 
-            log.info("JmsReceiverService: processVariables: " + processVariables.toString());
-            log.info("JmsReceiverService: processVariables: " + processVariables.getValueTyped("orderItem"));
-            //ProcessInstance pi = runtimeService.startProcessInstanceByMessage("newIncomingOrderMessage");
-            ProcessInstance pi = runtimeService.startProcessInstanceByMessage("newIncomingOrderMessage", businesskey, processVariables);
             String processInstanceId = pi.getProcessInstanceId();
             log.info("JmsReceiverService: Started process instance " + processInstanceId);
 
